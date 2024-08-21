@@ -1,50 +1,48 @@
 {
-  "author": "Wei Wang",
-  "bugs": {
-    "url": "https://github.com/onlywei/ra-data-rest/issues"
-  },
-  "dependencies": {
-    "query-string": "^9.1.0"
-  },
-  "deprecated": false,
-  "description": "Better ra-data-simple-rest",
-  "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "ra-core": "^4.16.20",
-    "typescript": "^5.5.4"
-  },
-  "files": [
-    "*.md",
-    "lib",
-    "esm",
-    "src"
-  ],
-  "homepage": "https://github.com/onlywei/ra-data-rest#readme",
-  "keywords": [
-    "ra-data-simple-rest",
-    "ra-data-rest",
-    "rest",
-    "client",
-    "react-admin"
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "module": "esm/index.js",
-  "name": "ra-data-rest",
-  "packageManager": "pnpm@9.7.1",
-  "peerDependencies": {
-    "ra-core": "^4.16.20"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/onlywei/ra-data-rest.git"
-  },
-  "scripts": {
-    "build": "npm run build-cjs && npm run build-esm",
-    "build-cjs": "rm -rf ./lib && tsc",
-    "build-esm": "rm -rf ./esm && tsc --outDir esm --module es2015",
-    "watch": "tsc --outDir esm --module es2015 --watch"
-  },
-  "sideEffects": false,
-  "version": "1.0.0"
+	"author": "Wei Wang",
+	"bugs": {
+		"url": "https://github.com/onlywei/ra-data-rest/issues"
+	},
+	"dependencies": {
+		"query-string": "^9.1.0"
+	},
+	"deprecated": false,
+	"description": "Better ra-data-simple-rest",
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/node": "^22.5.0",
+		"ra-core": "^4.16.20",
+		"tsx": "^4.17.0",
+		"typescript": "^5.5.4"
+	},
+	"files": ["*.md", "lib", "esm", "src"],
+	"homepage": "https://github.com/onlywei/ra-data-rest#readme",
+	"keywords": [
+		"ra-data-simple-rest",
+		"ra-data-rest",
+		"rest",
+		"client",
+		"react-admin"
+	],
+	"license": "MIT",
+	"main": "lib/index.js",
+	"module": "esm/index.js",
+	"name": "ra-data-rest",
+	"packageManager": "pnpm@9.7.1",
+	"peerDependencies": {
+		"ra-core": "^4.16.20"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/onlywei/ra-data-rest.git"
+	},
+	"scripts": {
+		"build": "npm run build-cjs && npm run build-esm",
+		"build-cjs": "rm -rf ./lib && tsc",
+		"build-esm": "rm -rf ./esm && tsc --outDir esm --module es2015",
+		"test": "tsx --test src/*.spec.ts",
+		"watch": "tsc --outDir esm --module es2015 --watch"
+	},
+	"sideEffects": false,
+	"version": "1.0.0"
 }
