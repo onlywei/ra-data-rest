@@ -1,5 +1,6 @@
-import { stringify } from 'query-string';
-import { fetchUtils, DataProvider } from 'ra-core';
+import queryString from 'query-string';
+import { fetchUtils } from 'ra-core';
+import type { DataProvider } from 'ra-core';
 
 /**
  * Based on https://github.com/marmelab/react-admin/master/packages/ra-data-simple-rest
@@ -48,38 +49,44 @@ import { fetchUtils, DataProvider } from 'ra-core';
 const _reKeyResponse = (json: any, key: string) => {
 	if (key === null) {
 		return json;
-	} else if (Array.isArray(json)) {
+	}
+
+	if (Array.isArray(json)) {
 		return json.map((x) => {
 			x.id = x[key];
 			delete x[key];
 			return x;
 		});
-	} else if (json[key] !== null) {
+	}
+
+	if (json[key] !== null) {
 		json.id = json[key];
 		delete json[key];
 		return json;
-	} else {
-		console.error('undhandled scenario of _reKeyResponse', key, json);
 	}
+	console.error('undhandled scenario of _reKeyResponse', key, json);
 };
+
 const _xFormResponse = (json: any, xFormFn: any) => {
 	if (!xFormFn) {
 		return json;
 	}
 	if (json === null) {
 		return json;
-	} else if (Array.isArray(json)) {
-		return json.map(xFormFn);
-	} else {
-		return xFormFn(json);
 	}
+
+	if (Array.isArray(json)) {
+		return json.map(xFormFn);
+	}
+	return xFormFn(json);
 };
+
 const _reKeyPayload = (data: any, reParam: string) => {
 	if (reParam === null) {
 		return data;
 	}
 
-	var { id, ...others } = data;
+	const { id, ...others } = data;
 
 	others[reParam] = data.id;
 	return others;
@@ -88,19 +95,20 @@ const _reKeyFilter = (filter: any, reParam: string) => {
 	if (filter === null) {
 		return null;
 	}
-	var { id, ...reFilter } = filter;
+	const { id, ...reFilter } = filter;
 
 	if (reParam !== null && id) {
 		reFilter[reParam] = id;
 	}
 	return reFilter;
 };
+
 export default (
 	apiUrl: string,
 	keysByResource: any = {} /* ex: {'posts':'key',...} */,
 	responseTransformsByResource: any = {},
 	httpClient = fetchUtils.fetchJson,
-	countHeader: string = 'Content-Range',
+	countHeader = 'Content-Range',
 ): DataProvider => ({
 	keysByResource: keysByResource,
 	xFormBy: responseTransformsByResource,
@@ -123,7 +131,7 @@ export default (
 			range: JSON.stringify([rangeStart, rangeEnd]),
 			filter: JSON.stringify(reFilter),
 		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
+		const url = `${apiUrl}/${resource}?${queryString.stringify(query)}`;
 		const options =
 			countHeader === 'Content-Range'
 				? {
@@ -147,8 +155,8 @@ export default (
 				),
 				total:
 					countHeader === 'Content-Range'
-						? parseInt(headers.get('content-range').split('/').pop(), 10)
-						: parseInt(headers.get(countHeader.toLowerCase())),
+						? Number.parseInt(headers.get('content-range').split('/').pop(), 10)
+						: Number.parseInt(headers.get(countHeader.toLowerCase())),
 			};
 		});
 	},
@@ -170,12 +178,12 @@ export default (
 	getMany: (resource, params) => {
 		const reParam =
 			resource in keysByResource ? keysByResource[resource] : null;
-		var q = {};
+		const q = {};
 		q[reParam ?? 'id'] = params.ids;
 		const query = {
 			filter: JSON.stringify(q),
 		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
+		const url = `${apiUrl}/${resource}?${queryString.stringify(query)}`;
 		return httpClient(url).then(({ json }) => ({
 			data: _xFormResponse(
 				_reKeyResponse(json, reParam),
@@ -188,7 +196,7 @@ export default (
 		const reParam =
 			resource in keysByResource ? keysByResource[resource] : null;
 		const { page, perPage } = params.pagination;
-		var { field, order } = params.sort;
+		let { field, order } = params.sort;
 		const reFilter = _reKeyFilter(params.filter, reParam);
 
 		if (reParam != null && field === 'id') {
@@ -205,7 +213,7 @@ export default (
 				[params.target]: params.id,
 			}),
 		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
+		const url = `${apiUrl}/${resource}?${queryString.stringify(query)}`;
 		const options =
 			countHeader === 'Content-Range'
 				? {
@@ -229,8 +237,8 @@ export default (
 				),
 				total:
 					countHeader === 'Content-Range'
-						? parseInt(headers.get('content-range').split('/').pop(), 10)
-						: parseInt(headers.get(countHeader.toLowerCase())),
+						? Number.parseInt(headers.get('content-range').split('/').pop(), 10)
+						: Number.parseInt(headers.get(countHeader.toLowerCase())),
 			};
 		});
 	},
