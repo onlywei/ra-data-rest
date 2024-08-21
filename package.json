@@ -9,6 +9,7 @@
   "deprecated": false,
   "description": "Better ra-data-simple-rest",
   "devDependencies": {
+    "@biomejs/biome": "1.8.3",
     "ra-core": "^4.16.20",
     "typescript": "^5.5.4"
   },
