@@ -30,6 +30,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "name": "ra-data-rest",
+  "packageManager": "pnpm@9.7.1",
   "peerDependencies": {
     "ra-core": "^4.16.20"
   },
