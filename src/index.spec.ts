@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { describe, it, mock } from 'node:test';
-import restClient from './index';
 import type { fetchUtils } from 'ra-core';
+import restClient from './index';
 
 describe('Data Simple REST Client', () => {
 	describe('getList', () => {

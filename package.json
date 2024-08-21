@@ -15,7 +15,7 @@
 		"tsx": "^4.17.0",
 		"typescript": "^5.5.4"
 	},
-	"files": ["*.md", "lib", "esm", "src"],
+	"files": ["*.md", "dist", "esm", "src"],
 	"homepage": "https://github.com/onlywei/ra-data-rest#readme",
 	"keywords": [
 		"ra-data-simple-rest",
@@ -25,7 +25,7 @@
 		"react-admin"
 	],
 	"license": "MIT",
-	"main": "lib/index.js",
+	"main": "dist/index.js",
 	"module": "esm/index.js",
 	"name": "ra-data-rest",
 	"packageManager": "pnpm@9.7.1",
@@ -38,8 +38,9 @@
 	},
 	"scripts": {
 		"build": "npm run build-cjs && npm run build-esm",
-		"build-cjs": "rm -rf ./lib && tsc",
+		"build-cjs": "rm -rf ./dist && tsc",
 		"build-esm": "rm -rf ./esm && tsc --outDir esm --module es2015",
+		"lint": "biome check .",
 		"test": "tsx --test src/*.spec.ts",
 		"watch": "tsc --outDir esm --module es2015 --watch"
 	},
